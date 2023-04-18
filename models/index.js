@@ -1,4 +1,6 @@
-const Student = require('./Student');
-const Course = require('./Course');
+const Thought = require('./thought');
+const User = require('./user');
+// const Reaction = require('./reactions'); 
+//! theres one of these in in the thoughts.js why isnt it here with the others?
 
-module.exports = { Student, Course };
+module.exports = { Thought, User, Reaction };

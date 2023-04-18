@@ -1,25 +1,31 @@
 const { Schema, model } = require('mongoose');
-const assignmentSchema = require('./Assignment');
+const reactionSchema = require('./reaction'); //! this is not working HELP
 
-// Schema to create Student model
-const studentSchema = new Schema(
+// Schema to create thought model
+const thoughtSchema = new Schema(
   {
-    first: {
+    thoughtText: {
       type: String,
       required: true,
-      max_length: 50,
+      max_length: 280, 
+      minlength: 1,
     },
-    last: {
+    createdAt: {
+      // date
+      // set default value to current timestamp
+      // use a getter method to format the timestamp on query
+    },
+    username: { //the user that created this thought
       type: String,
       required: true,
-      max_length: 50,
     },
-    github: {
-      type: String,
-      required: true,
-      max_length: 50,
+    reactions: {
+        // array of nested documents created with the reactionSchema
     },
-    assignments: [assignmentSchema],
+    //! Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
+
+
+    reactions: [reactionSchema],
   },
   {
     toJSON: {
@@ -28,6 +34,6 @@ const studentSchema = new Schema(
   }
 );
 
-const Student = model('student', studentSchema);
+const Thought = model('thought', thoughtSchema);
 
-module.exports = Student;
+module.exports = Thought;

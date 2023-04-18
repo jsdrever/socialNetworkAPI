@@ -1,25 +1,21 @@
 const { Schema, model } = require('mongoose');
 
-// Schema to create a course model
-const courseSchema = new Schema(
+// Schema to create a user model
+const userSchema = new Schema(
   {
-    courseName: {
+    userName: {
+      type: String,
+      unique: true,
+      required: true,
+      trimmed: true,
+    },
+    email: {
       type: String,
       required: true,
+      unique: true,
+      //! must match valid email address
     },
-    inPerson: {
-      type: Boolean,
-      default: true,
-    },
-    startDate: {
-      type: Date,
-      default: Date.now(),
-    },
-    endDate: {
-      type: Date,
-      // Sets a default value of 12 weeks from now
-      default: () => new Date(+new Date() + 84 * 24 * 60 * 60 * 1000),
-    },
+//! Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
     students: [
       {
         type: Schema.Types.ObjectId,
@@ -35,6 +31,6 @@ const courseSchema = new Schema(
   }
 );
 
-const Course = model('course', courseSchema);
+const User = model('user', userSchema);
 
-module.exports = Course;
+module.exports = User;
