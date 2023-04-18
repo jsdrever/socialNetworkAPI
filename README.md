@@ -1,2 +1,7 @@
 # socialNetworkAPI
-This is an API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list
+This is an API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list.
+
+## github URL
+https://github.com/jsdrever/socialNetworkAPI.git
+
+## Picture of the APP
