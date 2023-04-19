@@ -1,29 +1,6 @@
 const { ObjectId } = require('mongoose').Types;
 const { Thought, User } = require('../models');
 
-// Aggregate function to get the number of thoughts overall
-const headCount = async () => {
-  const numberOfThoughts = await Thought.aggregate()
-    .count('thoughtCount');
-  return numberOfThoughts;
-}
-
-// Aggregate function for getting the overall grade using $avg
-const grade = async (thoughtId) =>
-  Thought.aggregate([
-    // only include the given thought by using $match
-    { $match: { _id: new ObjectId(thoughtId) } },
-    {
-      $unwind: '$thoughts',
-    },
-    {
-      $group: {
-        _id: new ObjectId(thoughtId),
-        overallGrade: { $avg: '$thoughts.score' },
-      },
-    },
-  ]);
-
 module.exports = {
   // Get all thoughts
   async getThoughts(req, res) {
@@ -32,7 +9,6 @@ module.exports = {
 
       const thoughtObj = {
         thoughts,
-        headCount: await headCount(),
       };
 
       res.json(thoughtObj);
@@ -53,7 +29,7 @@ module.exports = {
 
       res.json({
         thought,
-        grade: await grade(req.params.thoughtId),
+        // grade: await grade(req.params.thoughtId),
       });
     } catch (err) {
       console.log(err);
@@ -133,6 +109,25 @@ module.exports = {
         return res
           .status(404)
           .json({ message: 'No thought found with that ID :(' });
+      }
+
+      res.json(thought);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
+
+  // Update a thought
+  async updateThought(req, res) {
+    try {
+      const thought = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $set: req.body },
+        { runValidators: true, new: true }
+      );
+
+      if (!thought) {
+        res.status(404).json({ message: 'No thoughts with this id!' });
       }
 
       res.json(thought);

@@ -1,8 +1,8 @@
 const { Schema, model } = require('mongoose');
-const reactionSchema = require('./reaction'); //! this is not working HELP
+// const reactionSchema = require('./reactions'); 
 const dateFormat = require("../utils/dateFormat");
 
-const ReactionSchema = new Schema(
+const reactionSchema = new Schema(
   {
     reactionId: {
       type: Schema.Types.ObjectId, // Mongoose's ObjectId data type  
@@ -72,7 +72,7 @@ const thoughtSchema = new Schema(
   }
 );
 
-ThoughtSchema.virtual("reactionCount").get(function () {
+thoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });
 
