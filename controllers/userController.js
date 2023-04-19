@@ -1,5 +1,3 @@
-// Course = User
-// Student = Thought
 const { User, Thought } = require('../models');
 
 module.exports = {
@@ -15,7 +13,7 @@ module.exports = {
   // Get a user
   async getSingleUser(req, res) {
     try {
-      const user = await User.findOne({ _id: req.params.courseId })
+      const user = await User.findOne({ _id: req.params.userId })
         .select('-__v');
 
       if (!user) {
@@ -40,7 +38,7 @@ module.exports = {
   // Delete a user
   async deleteUser(req, res) {
     try {
-      const user = await User.findOneAndDelete({ _id: req.params.courseId });
+      const user = await User.findOneAndDelete({ _id: req.params.userId });
 
       if (!user) {
         res.status(404).json({ message: 'No user with that ID' });
@@ -56,7 +54,7 @@ module.exports = {
   async updateUser(req, res) {
     try {
       const user = await User.findOneAndUpdate(
-        { _id: req.params.courseId },
+        { _id: req.params.userId },
         { $set: req.body },
         { runValidators: true, new: true }
       );

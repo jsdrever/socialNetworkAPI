@@ -1,11 +1,11 @@
 {
     "name": "socialNetworkAPI",
     "version": "1.0.1",
-    "description": "Mongoose back-end project - Main",
-    "main": "index.js",
-    "license": "MIT",
+    "description": "my version of facebook",
+    "main": "server.js",
+    "license": "Apache",
     "scripts": {
-      "start": "node index",
+      "start": "node server.js",
       "dev": "nodemon index",
       "seed": "node utils/seed",
       "heroku-postbuild": "node utils/seed.js"

@@ -1,7 +1,7 @@
 const { ObjectId } = require('mongoose').Types;
 const { Thought, User } = require('../models');
 
-// Aggregate function to get the number of students overall
+// Aggregate function to get the number of thoughts overall
 const headCount = async () => {
   const numberOfThoughts = await Thought.aggregate()
     .count('thoughtCount');
@@ -31,7 +31,7 @@ module.exports = {
       const thoughts = await Thought.find();
 
       const thoughtObj = {
-        students,
+        thoughts,
         headCount: await headCount(),
       };
 
@@ -80,7 +80,7 @@ module.exports = {
 
       const user = await User.findOneAndUpdate(
         { thoughts: req.params.thoughtId },
-        { $pull: { students: req.params.thoughtId } },
+        { $pull: { thoughts: req.params.thoughtId } },
         { new: true }
       );
 
@@ -97,8 +97,7 @@ module.exports = {
     }
   },
 
-  // Add an reaction to a thought
-  //! maybe this is where i could do reactions to thoughts
+  // Add a reaction to a thought
   async addReaction(req, res) {
     console.log('You are adding a reaction');
     console.log(req.body);
